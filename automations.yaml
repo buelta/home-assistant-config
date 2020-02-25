@@ -58,3 +58,25 @@
         entity_id: climate.home_thermostat
         hvac_mode: heat
         temperature: 22
+
+- id: someone_is_ringing_the_doorbell
+  alias: "Someone is ringing the doorbell"
+  description: "Send notifications when someone's ringing the doorbell."
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esp32_03_button
+      from: "off"
+      to: "on"
+  action:
+    - service: notify.webos_tv_lf652v
+      data:
+        message: "Han llamado al timbre."
+    - service: notify.webos_tv_lm6300pla
+      data:
+        message: "Han llamado al timbre."
+    - service: notify.mobile_app_oneplus_a5000
+      data:
+        message: "Han llamado al timbre."
+    - service: notify.mobile_app_iphone_de_eva
+      data:
+        message: "Han llamado al timbre."

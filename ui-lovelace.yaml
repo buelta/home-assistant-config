@@ -14,6 +14,40 @@ views:
         entity: climate.home_thermostat
       - type: weather-forecast
         entity: weather.home
+      - type: vertical-stack
+        cards:
+          - type: conditional
+            conditions:
+              - entity: switch.esp32_03_mute
+                state: "on"
+            card:
+              type: glance
+              title: "Doorbell"
+              entities:
+                - entity: binary_sensor.esp32_03_button
+                  name: "Door Button"
+                - entity: switch.esp32_03_mute
+                  name: "Muted"
+                  tap_action:
+                    action: toggle
+          - type: conditional
+            conditions:
+              - entity: switch.esp32_03_mute
+                state: "off"
+            card:
+              type: glance
+              title: "Doorbell"
+              entities:
+                - entity: binary_sensor.esp32_03_button
+                  name: "Door Button"
+                - entity: switch.esp32_03_mute
+                  name: "Muted"
+                  tap_action:
+                    action: toggle
+                - entity: switch.esp32_03_switch
+                  name: "Ring"
+                  tap_action:
+                    action: toggle
   - id: 1
     icon: mdi:home-floor-0
     name: Ground Floor
@@ -36,6 +70,13 @@ views:
           - plant.orchid
           - entity: media_player.webos_tv_lf652v
             name: Television
+      - type: glance
+        title: Hallway
+        entities:
+          - entity: sensor.esp32_03_temperature
+            name: Temperature
+          - entity: sensor.esp32_03_humidity
+            name: Humidity
       - type: entities
         title: Garage
         show_header_toggle: false
@@ -158,6 +199,7 @@ views:
           - automation.telegram_send_message_on_mijia_flora_01_moisture_is_low
           - automation.turn_on_off_garage_blanket
           - automation.turn_on_the_heating_at_morning
+          - automation.someone_is_ringing_the_doorbell
       - type: glance
         title: Status
         columns: 3
